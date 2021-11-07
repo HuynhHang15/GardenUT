@@ -328,7 +328,6 @@
     <script>
         $(document).ready(function(){
             $(".modal-detail .showModal .images img").click(function(){
-                alert("ok");
                 $(this).addClass('active').siblings().removeClass('active');
                 let image  = $(this).attr('src');
                 $(".modal-detail .showModal .modal-slider img").attr('src', image);

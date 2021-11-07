@@ -16,8 +16,6 @@
         <table class="table table-striped table-sm">
           <thead>
             <tr>
-            <form method="post" enctype="multipart/form-data"><input type="text" name="id_orderToDetails"></form>
-
               <th>Mã đặt hàng</th>
               <th>Tên khách hàng</th>
               <th>Địa chỉ</th>

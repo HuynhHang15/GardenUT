@@ -40,10 +40,10 @@ class Customers
 		}
 		return ['status'=> 303, 'message'=> 'no orders yet'];
 	}
-	public function getOrderDetails($post = null){
-		extract($post);
-		if (!empty($id_orderToDetail)){
-			$query = $this->con->query("SELECT  o.id_order, o.soluong, s.tensp ,s.hinhanh FROM order_details o JOIN sanpham s ON o.id_sanpham = s.id_sanpham WHERE o.id_order = '$id_orderToDetail'");
+	public function getOrderDetails($cid = null){
+
+		if ($cid != null){
+			$query = $this->con->query("SELECT  o.id_order, o.soluong, s.tensp ,s.hinhanh FROM order_details o JOIN sanpham s ON o.id_sanpham = s.id_sanpham WHERE o.id_order = '$cid'");
 			$ar = [];
 			if (@$query->num_rows > 0) {
 				while ($row = $query->fetch_assoc()) {
@@ -85,12 +85,12 @@ if (isset($_POST["GET_CUSTOMER_ORDERS"])) {
 
 
 if (isset($_POST['GET_ORDER_DETAILS'])) {
-	if (!empty($_POST['id_orderToDetails'])) {
+	if (!empty($_POST['cid'])) {
 		$c = new Customers();
-		echo json_encode($c->getOrderDetails($_POST));
+		echo json_encode($c->getOrderDetails($_POST['cid']));
 		exit();
 	}else{
-		echo json_encode(['status'=> 303, 'message'=> 'huhu']);
+		echo json_encode(['status'=> 303, 'message'=> 'Invalid details']);
 		exit();
 	}
 }

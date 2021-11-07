@@ -17,7 +17,7 @@
         $xa   = addslashes($_POST['xa']);
         $sonha   = addslashes($_POST['sonha']);
         $tongsl   = addslashes($_POST['totalProducts']);
-        
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
         $ngaydat = date('Y-m-d H:i:s');
         $user_id = $_SESSION['user_id'];
 

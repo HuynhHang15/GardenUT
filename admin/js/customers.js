@@ -60,7 +60,7 @@ $(document).ready(function(){
 								              '<td>'+value.sonha+', '+value.xa+', '+value.huyen+', '+value.tinh+'</td>'+
 								              '<td>'+ value.ngaydat +'</td>'+
 								              '<td>'+ value.tongsl +'</td>'+
-											  '<td><a class="btn btn-sm btn-info details" style="color:#fff;"><span style="display:none;">'+JSON.stringify(value)+'</span>Chi tiết</a>&nbsp;'+
+											  '<td><a cid="'+value.id_order+'" class="btn btn-sm btn-info details" style="color:#fff;"><span style="display:none;">'+JSON.stringify(value)+'</span>Chi tiết</a>&nbsp;'+
 								            '</tr>';
 					});
 						
@@ -75,18 +75,20 @@ $(document).ready(function(){
 		
 	}
 
-	function getOrderDetails(){
-		$.ajax({
-			url : '../admin/classes/Customers.php',
-			method : 'POST',
-			data : {GET_ORDER_DETAILS:1},
-			success : function(response){
-				
-				console.log(response);
-				var resp = $.parseJSON(response);
-				if (resp.status == 202) {
+	
 
-					var orderDetailsHTML = "";
+
+	$(document.body).on('click', '.details', function(){
+		
+		var cid = $(this).attr('cid');
+			$.ajax({
+				url : '../admin/classes/Customers.php',
+				method : 'POST',
+				data : {GET_ORDER_DETAILS:1, cid:cid},
+				success : function(response){
+					var resp = $.parseJSON(response);
+					if (resp.status == 202) {
+						var orderDetailsHTML = "";
 
 					$.each(resp.message, function(index, value){
 
@@ -104,17 +106,9 @@ $(document).ready(function(){
 				}else if(resp.status == 303){
 					$("#order-details").html(resp.message);
 				}
-
-			}
-		})
-	}
-
-	$(document.body).on('click', '.details', function(){
-		var order = $.parseJSON($.trim($(this).children("span").html()));
-		$("input[name='id_orderToDetails']").val(order.id_order);
-		$("#product_details").modal('show');
-		getOrderDetails();
+				}
+			})
+			$("#product_details").modal('show');
 	});
-
 
 });
